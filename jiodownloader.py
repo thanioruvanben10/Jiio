@@ -4,12 +4,12 @@ import subprocess
 import jwt
 import re
 
-with open('access_token.txt', 'r') as file:
-    access_token = file.read().strip()  
-    
-print('\ntest link: https://www.jiocinema.com/movies/sergeant-bhojpuri/3767689\ntest link: https://www.jiocinema.com/tv-shows/kaalkoot/1/janam-din/3788001\n')
+with open('creds.txt', 'r') as file:
+    Creds = json.load(file)
+    accesstoken = Creds['accesstoken']
+    access_token = accesstoken
 
-link = input('link: ')
+link = input('Enter your link: ')
 link_id = re.findall(r'.*/(.*)', link)[0].strip()
 
 m3u8DL_RE = 'N_m3u8DL-RE'
@@ -83,7 +83,7 @@ json_data2 = {
 }
 
 response2 = requests.post('https://apis-jiovoot.voot.com/playbackjv/v4/'+link_id+'', headers=headers2, json=json_data2, verify=False).json()
-
+print(response2)
 contentType = response2['data']['contentType']
 
 if contentType == 'MOVIE':
